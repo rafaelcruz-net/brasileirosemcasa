@@ -16,7 +16,7 @@
                         </div>
                         <md-card class="md-elevation-0">
                             <md-card-content>
-                                <div class="md-layout md-gutter md-alignment-center-center">
+                                <div class="md-layout md-alignment-center-center">
                                     <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100 md-large-size-50 md-xlarge-size-50" style="text-align:center">
                                         <p class="md-subheading md-alignment-center-center">Todos em casa para ajudarmos
                                             ao
@@ -29,7 +29,7 @@
                                             sensibilizar para esta questão tão importante neste momento.</p>
                                         <br />
                                         <br />
-                                        <md-button class="md-raised md-accent" style="width: 300px;min-height: 60px;"
+                                        <md-button class="md-raised md-accent"
                                             @click="showDialog = true">
                                             QUERO DIZER QUE ESTOU EM CASA
                                         </md-button>
@@ -62,10 +62,11 @@
                     </md-content>
                     <md-content>
                         <div class="md-layout md-alignment-center-center map-padding">
+                            <div class="md-layout-item md-medium-size-65 md-small-size-100 md-xsmall-size-100 md-large-size-45 md-xlarge-size-30">
                             <center>
-                                <highcharts :constructor-type="'mapChart'" :options="mapOptions"
-                                    class="md-layout-item md-medium-size-100 md-small-size-100 md-xsmall-size-100 md-large-size-100 md-xlarge-size-100"></highcharts>
+                                <highcharts :constructor-type="'mapChart'" :options="mapOptions"></highcharts>
                             </center>
+                            </div>
                         </div>
                     </md-content>
                 </md-app-content>
@@ -103,9 +104,9 @@
                                     um
                                     campo obrigatório</span>
                             </md-field>
-                            <md-field :class="getValidationClass('quantidadePessoasCasa')" required>
+                            <md-field :class="getValidationClass('quantidadePessoasCasa')" >
                                 <label>Quantas pessoas em casa?</label>
-                                <md-input type="number" v-model="form.quantidadePessoasCasa"
+                                <md-input type="number" v-model="form.quantidadePessoasCasa" required
                                     name="quantidadePessoasCasa" id="quantidadePessoasCasa" />
                                 <span class="md-error"
                                     v-if="!$v.form.quantidadePessoasCasa.required && $v.form.quantidadePessoasCasa.$dirty">Quantidade
@@ -127,8 +128,8 @@
                 </md-dialog-content>
                 <md-dialog-actions>
                     <md-dialog-actions>
-                        <md-button class="md-primary md-flat" @click="saveDialog">Salvar</md-button>
-                        <md-button class="md-accent" @click="showDialog = false">Fechar</md-button>
+                        <md-button class="md-primary md-raised" @click="saveDialog">Salvar</md-button>
+                        <md-button class="md-accent md-raised" @click="showDialog = false">Fechar</md-button>
                     </md-dialog-actions>
                 </md-dialog-actions>
             </md-dialog>
@@ -205,15 +206,45 @@ export default {
     mapOptions: {
       chart: {
         map: 'myMapName',
-        width: 580,
-        height: 580
+        height: '100%'
       },
       title: {
         text: ''
       },
       legend: {
-        enabled: true
+        enabled: true,
+        title: {
+          text: 'Densidade de casos de COVID-19'
+        }
       },
+      mapNavigation: {
+        enabled: true,
+        buttons: {
+          zoomIn: {
+            align: 'right'
+          },
+          zoomOut: {
+            align: 'right'
+          }
+        }
+      },
+      colorAxis: [{
+        minColor: '#FFEBEE',
+        maxColor: '#B71C1C',
+        startOnTick: false,
+        endOnTick: false,
+        type: 'logarithmic',
+        min: 10,
+        max: 10000,
+        showInLegend: true,
+        labels: {
+          align: 'center',
+          enabled: true
+        }
+
+      }
+      ],
+
       series: [{
         name: 'Casos de Covid-19',
         dataLabels: {
@@ -221,7 +252,13 @@ export default {
         },
         type: 'map',
         data: [],
-        color: '#ff5252'
+        colorAxis: 0,
+        showInLegend: false,
+        states: {
+          hover: {
+            color: '#BA68C8'
+          }
+        }
       },
       {
         type: 'mapbubble',
@@ -230,39 +267,14 @@ export default {
         data: [],
         minSize: 5,
         maxSize: '8%',
-        color: '#448aff',
+        colorAxis: null,
+        color: '#42A5F5',
         tooltip: {
           pointFormat: '{point.properties.woe-name}: {point.z}'
-        }
-      }
-      ],
-      responsive: {
-        rules: [{
-          condition: {
-            maxWidth: 500,
-            maxHeight: 500
-          },
-          chartOptions: {
-            xAxis: {
-              labels: {
-                formatter: function () {
-                  return this.value.charAt(0);
-                }
-              }
-            },
-            yAxis: {
-              labels: {
-                align: 'left',
-                x: 0,
-                y: -2
-              },
-              title: {
-                text: ''
-              }
-            }
-          }
-        }]
-      }
+        },
+        showInLegend: false
+
+      }]
     }
   }),
   mounted () {
