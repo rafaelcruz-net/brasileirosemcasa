@@ -1,134 +1,156 @@
 <template>
-    <div class="page-container">
-        <md-app md-mode="reveal">
-            <md-app-toolbar>
-                <span class="md-title">
-                    <img src="/img/logo.png" width="96" height="96" style="padding:10px">
-                </span>
-            </md-app-toolbar>
-            <md-app-content>
-                <md-content>
-                    <div class="md-layout md-alignment-center-center">
-                        <div class="md-layout-item md-size-50" style="text-align:center">
-                            <img src="/img/logo.png" width="200" height="200" style="padding:10px">
-                        </div>
-                    </div>
-
-                    <md-card class="md-elevation-0">
-                        <md-card-content>
-                            <div class="md-layout md-gutter md-alignment-center-center">
-                                <div class="md-layout-item md-size-50" style="text-align:center">
-                                    <p class="md-subheading md-alignment-center-center">Todos em casa para ajudarmos ao
-                                        combate do COVID-19!<br />
-                                        <br />
-                                        Por essa razão foi criada esta página que pretende mostrar quantos de nós já
-                                        estamos em casa.
-                                        <br />
-                                        O objetivo desta página não é o de ter informação exata, mas o de ajudar a
-                                        sensibilizar para esta questão tão importante neste momento.</p>
-                                    <br />
-                                    <br />
-                                    <md-button class="md-raised md-accent" style="width: 300px;min-height: 60px;"
-                                        @click="showDialog = true">
-                                        QUERO DIZER QUE ESTOU EM CASA
-                                    </md-button>
-                                </div>
+    <div>
+        <div class="page-container">
+            <md-app md-mode="reveal">
+                <md-app-toolbar>
+                    <span class="md-title">
+                        <img src="/img/logo.png" width="96" height="96" style="padding:10px">
+                    </span>
+                </md-app-toolbar>
+                <md-app-content>
+                    <md-content>
+                        <div class="md-layout md-alignment-center-center">
+                            <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100 md-large-size-50 md-xlarge-size-50" style="text-align:center">
+                                <img src="/img/logo.png" width="200" height="200" style="padding:10px">
                             </div>
-                        </md-card-content>
-                    </md-card>
-                </md-content>
-                <md-content>
-                    <div class="md-layout md-alignment-center-center">
-                        <div class="md-layout-item"></div>
-                        <div class="md-layout-item" style="text-align:center">
-                            <md-card class="md-primary">
-                                <md-card-header>
-                                    <md-card-header-text>
-                                        <div class="md-title md-counter-title">{{counter}}</div>
-                                        <div class="md-subhead md-counter-subtitle">Brasileiros em casa</div>
-                                    </md-card-header-text>
-                                </md-card-header>
-                            </md-card>
                         </div>
-                        <div class="md-layout-item" style="text-align:center">
-                            <md-card class="md-accent">
-                                <md-card-header>
-                                    <div class="md-title md-counter-title">{{casoConfirmadosCounter}}</div>
-                                    <div class="md-subhead md-counter-subtitle">Casos Confirmados</div>
-                                </md-card-header>
-                            </md-card>
+                        <md-card class="md-elevation-0">
+                            <md-card-content>
+                                <div class="md-layout md-gutter md-alignment-center-center">
+                                    <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100 md-large-size-50 md-xlarge-size-50" style="text-align:center">
+                                        <p class="md-subheading md-alignment-center-center">Todos em casa para ajudarmos
+                                            ao
+                                            combate do COVID-19!<br />
+                                            <br />
+                                            Por essa razão foi criada esta página que pretende mostrar quantos de nós já
+                                            estamos em casa.
+                                            <br />
+                                            O objetivo desta página não é o de ter informação exata, mas o de ajudar a
+                                            sensibilizar para esta questão tão importante neste momento.</p>
+                                        <br />
+                                        <br />
+                                        <md-button class="md-raised md-accent" style="width: 300px;min-height: 60px;"
+                                            @click="showDialog = true">
+                                            QUERO DIZER QUE ESTOU EM CASA
+                                        </md-button>
+                                    </div>
+                                </div>
+                            </md-card-content>
+                        </md-card>
+                    </md-content>
+                    <md-content>
+                        <div class="md-layout md-alignment-center-center">
+                            <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100 md-large-size-25 md-xlarge-size-20" style="text-align:center">
+                                <md-card class="md-primary">
+                                    <md-card-header>
+                                        <md-card-header-text>
+                                            <div class="md-title md-counter-title">{{counter}}</div>
+                                            <div class="md-subhead md-counter-subtitle">Brasileiros em casa</div>
+                                        </md-card-header-text>
+                                    </md-card-header>
+                                </md-card>
+                            </div>
+                            <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100 md-large-size-25 md-xlarge-size-20" style="text-align:center">
+                                <md-card class="md-accent">
+                                    <md-card-header>
+                                        <div class="md-title md-counter-title">{{casoConfirmadosCounter}}</div>
+                                        <div class="md-subhead md-counter-subtitle">Casos Confirmados</div>
+                                    </md-card-header>
+                                </md-card>
+                            </div>
                         </div>
-                        <div class="md-layout-item"></div>
+                    </md-content>
+                    <md-content>
+                        <div class="md-layout md-alignment-center-center map-padding">
+                            <center>
+                                <highcharts :constructor-type="'mapChart'" :options="mapOptions"
+                                    class="md-layout-item md-medium-size-100 md-small-size-100 md-xsmall-size-100 md-large-size-100 md-xlarge-size-100"></highcharts>
+                            </center>
+                        </div>
+                    </md-content>
+                </md-app-content>
+            </md-app>
+            <md-dialog ref="dialog" :md-active.sync="showDialog" md-fullscreen class="md-primary">
+                <loading :active.sync="sending" :can-cancel="false" :is-full-page="false" :color="'#ff5252'" :width='72'
+                    :height='72'></loading>
+                <md-dialog-title>Sou um brasileiro em casa</md-dialog-title>
+                <md-dialog-content>
+
+                    <div class="md-layout md-gutter">
+                        <div class="md-layout-item md-medium-size-100 md-small-size-100 md-xsmall-size-100 md-large-size-100 md-xlarge-size-100" style="text-align:center">
+
+                            <md-field :class="getValidationClass('uf')">
+                                <label>Seu Estado</label>
+                                <md-select v-model="form.uf" name="uf" id="uf" required @md-selected="onEstadoSelected">
+                                    <md-option value="">Selecione</md-option>
+                                    <md-option v-for="estado in estados" :value="estado.uf" :key="estado.id">
+                                        {{estado.nome}}
+                                    </md-option>
+                                </md-select>
+                                <span class="md-error" v-if="!$v.form.uf.required && $v.form.uf.$dirty">Estado é um
+                                    campo
+                                    obrigatório</span>
+                            </md-field>
+                            <md-field :class="getValidationClass('cidade')">
+                                <label>Sua Cidade</label>
+                                <md-select v-model="form.cidade" name="cidade" id="cidade" required>
+                                    <md-option value="">Selecione</md-option>
+                                    <md-option v-for="cidade in cidades" :value="cidade.id" :key="cidade.id">
+                                        {{cidade.nome}}
+                                    </md-option>
+                                </md-select>
+                                <span class="md-error" v-if="!$v.form.cidade.required && $v.form.cidade.$dirty">Cidade é
+                                    um
+                                    campo obrigatório</span>
+                            </md-field>
+                            <md-field :class="getValidationClass('quantidadePessoasCasa')" required>
+                                <label>Quantas pessoas em casa?</label>
+                                <md-input type="number" v-model="form.quantidadePessoasCasa"
+                                    name="quantidadePessoasCasa" id="quantidadePessoasCasa" />
+                                <span class="md-error"
+                                    v-if="!$v.form.quantidadePessoasCasa.required && $v.form.quantidadePessoasCasa.$dirty">Quantidade
+                                    de Pessoas é um campo obrigatório</span>
+                                <span class="md-error"
+                                    v-else-if="!$v.form.quantidadePessoasCasa.minValue && $v.form.quantidadePessoasCasa.$dirty">Quantidade
+                                    de Pessoas deve ser maior que zero</span>
+                            </md-field>
+                            <md-datepicker v-model="form.dataInicioQuarentena"
+                                :class="getValidationClass('dataInicioQuarentena')">
+                                <label>Desde quando em casa?*</label>
+                                <span class="md-error"
+                                    v-if="!$v.form.dataInicioQuarentena.required && $v.form.dataInicioQuarentena.$dirty">Data
+                                    de ínicio de quarentena é um campo obrigatório</span>
+                            </md-datepicker>
+
+                        </div>
                     </div>
-                </md-content>
-                <md-content>
-                    <div class="md-layout md-alignment-center-center">
-                        <center>
-                            <highcharts :constructor-type="'mapChart'" :options="mapOptions"
-                                class="md-layout-item map-padding"></highcharts>
-                        </center>
-                    </div>
-                </md-content>
-            </md-app-content>
-        </md-app>
-        <md-dialog ref="dialog" :md-active.sync="showDialog" md-fullscreen class="md-primary">
-            <loading :active.sync="sending" :can-cancel="false" :is-full-page="false" :color="'#ff5252'" :width='72'
-                :height='72'></loading>
-            <md-dialog-title>Sou um brasileiro em casa</md-dialog-title>
-            <md-dialog-content>
+                </md-dialog-content>
+                <md-dialog-actions>
+                    <md-dialog-actions>
+                        <md-button class="md-primary md-flat" @click="saveDialog">Salvar</md-button>
+                        <md-button class="md-accent" @click="showDialog = false">Fechar</md-button>
+                    </md-dialog-actions>
+                </md-dialog-actions>
+            </md-dialog>
+        </div>
+        <footer style="min-height:60px">
+            <div class="md-layout md-alignment-center-space-between footer">
+                <div class="md-layout-item md-size-25 md-alignment-center-center">
+                    <p class="md-body-2">Fonte dos casos de COVID-19: <br /> <a href='https://labs.wesleycota.com/sarscov2/br/#'>https://labs.wesleycota.com/sarscov2/br/#</a></p>
+                </div>
 
-                <div class="md-layout md-gutter">
-                    <div class="md-layout-item" style="text-align:center">
-
-                        <md-field :class="getValidationClass('uf')">
-                            <label>Seu Estado</label>
-                            <md-select v-model="form.uf" name="uf" id="uf" required @md-selected="onEstadoSelected">
-                                <md-option value="">Selecione</md-option>
-                                <md-option v-for="estado in estados" :value="estado.uf" :key="estado.id">{{estado.nome}}
-                                </md-option>
-                            </md-select>
-                            <span class="md-error" v-if="!$v.form.uf.required && $v.form.uf.$dirty">Estado é um campo
-                                obrigatório</span>
-                        </md-field>
-                        <md-field :class="getValidationClass('cidade')">
-                            <label>Sua Cidade</label>
-                            <md-select v-model="form.cidade" name="cidade" id="cidade" required>
-                                <md-option value="">Selecione</md-option>
-                                <md-option v-for="cidade in cidades" :value="cidade.id" :key="cidade.id">{{cidade.nome}}
-                                </md-option>
-                            </md-select>
-                            <span class="md-error" v-if="!$v.form.cidade.required && $v.form.cidade.$dirty">Cidade é um
-                                campo obrigatório</span>
-                        </md-field>
-                        <md-field :class="getValidationClass('quantidadePessoasCasa')" required>
-                            <label>Quantas pessoas em casa?</label>
-                            <md-input type="number" v-model="form.quantidadePessoasCasa" name="quantidadePessoasCasa"
-                                id="quantidadePessoasCasa" />
-                            <span class="md-error"
-                                v-if="!$v.form.quantidadePessoasCasa.required && $v.form.quantidadePessoasCasa.$dirty">Quantidade
-                                de Pessoas é um campo obrigatório</span>
-                            <span class="md-error"
-                                v-else-if="!$v.form.quantidadePessoasCasa.minValue && $v.form.quantidadePessoasCasa.$dirty">Quantidade
-                                de Pessoas deve ser maior que zero</span>
-                        </md-field>
-                        <md-datepicker v-model="form.dataInicioQuarentena"
-                            :class="getValidationClass('dataInicioQuarentena')">
-                            <label>Desde quando em casa?*</label>
-                            <span class="md-error"
-                                v-if="!$v.form.dataInicioQuarentena.required && $v.form.dataInicioQuarentena.$dirty">Data
-                                de ínicio de quarentena é um campo obrigatório</span>
-                        </md-datepicker>
-
+                <div class="md-layout-item md-size-10 md-alignment-center-right">
+                    <p class="md-body-2">Feito com
+                        <md-avatar class="md-avatar-icon md-small md-accent">
+                            <md-icon>favorite</md-icon>
+                        </md-avatar>
+                        por</p>
+                    <div>
+                        <img src="/img/logo-rodape.png" width="220" height="150" />
                     </div>
                 </div>
-            </md-dialog-content>
-            <md-dialog-actions>
-                <md-dialog-actions>
-                    <md-button class="md-primary md-flat" @click="saveDialog">Salvar</md-button>
-                    <md-button class="md-accent" @click="showDialog = false">Fechar</md-button>
-                </md-dialog-actions>
-            </md-dialog-actions>
-        </md-dialog>
+            </div>
+        </footer>
     </div>
 </template>
 <script>
@@ -183,8 +205,8 @@ export default {
     mapOptions: {
       chart: {
         map: 'myMapName',
-        width: 600,
-        height: 600
+        width: 580,
+        height: 580
       },
       title: {
         text: ''
@@ -207,13 +229,40 @@ export default {
         joinBy: ['hc-key'],
         data: [],
         minSize: 5,
-        maxSize: '10%',
+        maxSize: '8%',
         color: '#448aff',
         tooltip: {
           pointFormat: '{point.properties.woe-name}: {point.z}'
         }
       }
-      ]
+      ],
+      responsive: {
+        rules: [{
+          condition: {
+            maxWidth: 500,
+            maxHeight: 500
+          },
+          chartOptions: {
+            xAxis: {
+              labels: {
+                formatter: function () {
+                  return this.value.charAt(0);
+                }
+              }
+            },
+            yAxis: {
+              labels: {
+                align: 'left',
+                x: 0,
+                y: -2
+              },
+              title: {
+                text: ''
+              }
+            }
+          }
+        }]
+      }
     }
   }),
   mounted () {
@@ -317,9 +366,9 @@ export default {
     .md-counter-subtitle {
         opacity: 1 !important;
     }
-
     .map-padding {
-        margin: 80px;
+        margin-top: 40px;
+        margin-bottom: 40px;
     }
 
     .md-icon:after {
@@ -330,5 +379,10 @@ export default {
         bottom: -5px;
         transition: .3s cubic-bezier(.4, 0, .2, 1);
         content: normal !important;
+    }
+
+    .footer {
+        min-height: inherit;
+        padding: 20px;
     }
 </style>
