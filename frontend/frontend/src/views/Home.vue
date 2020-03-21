@@ -2,27 +2,27 @@
     <div class="page-container">
         <md-app md-mode="reveal">
             <md-app-toolbar>
-                <span class="md-title"></span>
+                <span class="md-title">
+                    <img src="/img/logo.png" width="96" height="96" style="padding:10px">
+                </span>
             </md-app-toolbar>
             <md-app-content>
                 <md-content>
-                    <md-empty-state md-icon="pan_tool">
-                    </md-empty-state>
+                    <div class="md-layout md-alignment-center-center">
+                        <div class="md-layout-item md-size-50" style="text-align:center">
+                            <img src="/img/logo.png" width="200" height="200" style="padding:10px">
+                        </div>
+                    </div>
+
                     <md-card class="md-elevation-0">
-                        <md-card-header>
-                            <md-card-header-text>
-                                <div class="md-layout md-gutter md-alignment-center-center">
-                                    <div class="md-display-3">Brasileiros em casa</div>
-                                </div>
-                            </md-card-header-text>
-                        </md-card-header>
                         <md-card-content>
                             <div class="md-layout md-gutter md-alignment-center-center">
                                 <div class="md-layout-item md-size-50" style="text-align:center">
                                     <p class="md-subheading md-alignment-center-center">Todos em casa para ajudarmos ao
                                         combate do COVID-19!<br />
                                         <br />
-                                        Por essa razão foi criada esta página que pretende mostrar quantos de nós já estamos em casa.
+                                        Por essa razão foi criada esta página que pretende mostrar quantos de nós já
+                                        estamos em casa.
                                         <br />
                                         O objetivo desta página não é o de ter informação exata, mas o de ajudar a
                                         sensibilizar para esta questão tão importante neste momento.</p>
@@ -50,7 +50,7 @@
                                 </md-card-header>
                             </md-card>
                         </div>
-                         <div class="md-layout-item" style="text-align:center">
+                        <div class="md-layout-item" style="text-align:center">
                             <md-card class="md-accent">
                                 <md-card-header>
                                     <div class="md-title md-counter-title">{{casoConfirmadosCounter}}</div>
@@ -72,7 +72,8 @@
             </md-app-content>
         </md-app>
         <md-dialog ref="dialog" :md-active.sync="showDialog" md-fullscreen class="md-primary">
-            <loading :active.sync="sending" :can-cancel="false" :is-full-page="false" :color="'#ff5252'" :width='72' :height='72'  ></loading>
+            <loading :active.sync="sending" :can-cancel="false" :is-full-page="false" :color="'#ff5252'" :width='72'
+                :height='72'></loading>
             <md-dialog-title>Sou um brasileiro em casa</md-dialog-title>
             <md-dialog-content>
 
@@ -81,13 +82,13 @@
 
                         <md-field :class="getValidationClass('uf')">
                             <label>Seu Estado</label>
-                            <md-select v-model="form.uf" name="uf" id="uf" required
-                                @md-selected="onEstadoSelected">
+                            <md-select v-model="form.uf" name="uf" id="uf" required @md-selected="onEstadoSelected">
                                 <md-option value="">Selecione</md-option>
                                 <md-option v-for="estado in estados" :value="estado.uf" :key="estado.id">{{estado.nome}}
                                 </md-option>
                             </md-select>
-                            <span class="md-error" v-if="!$v.form.uf.required && $v.form.uf.$dirty">Estado é um campo obrigatório</span>
+                            <span class="md-error" v-if="!$v.form.uf.required && $v.form.uf.$dirty">Estado é um campo
+                                obrigatório</span>
                         </md-field>
                         <md-field :class="getValidationClass('cidade')">
                             <label>Sua Cidade</label>
@@ -96,17 +97,26 @@
                                 <md-option v-for="cidade in cidades" :value="cidade.id" :key="cidade.id">{{cidade.nome}}
                                 </md-option>
                             </md-select>
-                            <span class="md-error" v-if="!$v.form.cidade.required && $v.form.cidade.$dirty">Cidade é um campo obrigatório</span>
+                            <span class="md-error" v-if="!$v.form.cidade.required && $v.form.cidade.$dirty">Cidade é um
+                                campo obrigatório</span>
                         </md-field>
                         <md-field :class="getValidationClass('quantidadePessoasCasa')" required>
                             <label>Quantas pessoas em casa?</label>
-                            <md-input type="number" v-model="form.quantidadePessoasCasa" name="quantidadePessoasCasa" id="quantidadePessoasCasa" />
-                            <span class="md-error" v-if="!$v.form.quantidadePessoasCasa.required && $v.form.quantidadePessoasCasa.$dirty">Quantidade de Pessoas é um campo obrigatório</span>
-                            <span class="md-error" v-else-if="!$v.form.quantidadePessoasCasa.minValue && $v.form.quantidadePessoasCasa.$dirty">Quantidade de Pessoas deve ser maior que zero</span>
+                            <md-input type="number" v-model="form.quantidadePessoasCasa" name="quantidadePessoasCasa"
+                                id="quantidadePessoasCasa" />
+                            <span class="md-error"
+                                v-if="!$v.form.quantidadePessoasCasa.required && $v.form.quantidadePessoasCasa.$dirty">Quantidade
+                                de Pessoas é um campo obrigatório</span>
+                            <span class="md-error"
+                                v-else-if="!$v.form.quantidadePessoasCasa.minValue && $v.form.quantidadePessoasCasa.$dirty">Quantidade
+                                de Pessoas deve ser maior que zero</span>
                         </md-field>
-                        <md-datepicker v-model="form.dataInicioQuarentena" :class="getValidationClass('dataInicioQuarentena')">
+                        <md-datepicker v-model="form.dataInicioQuarentena"
+                            :class="getValidationClass('dataInicioQuarentena')">
                             <label>Desde quando em casa?*</label>
-                            <span class="md-error" v-if="!$v.form.dataInicioQuarentena.required && $v.form.dataInicioQuarentena.$dirty">Data de ínicio de quarentena é um campo obrigatório</span>
+                            <span class="md-error"
+                                v-if="!$v.form.dataInicioQuarentena.required && $v.form.dataInicioQuarentena.$dirty">Data
+                                de ínicio de quarentena é um campo obrigatório</span>
                         </md-datepicker>
 
                     </div>
@@ -123,8 +133,13 @@
 </template>
 <script>
 import _ from 'lodash';
-import { validationMixin } from 'vuelidate';
-import { required, minValue } from 'vuelidate/lib/validators';
+import {
+  validationMixin
+} from 'vuelidate';
+import {
+  required,
+  minValue
+} from 'vuelidate/lib/validators';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import Pessoa from '../model/Pessoa';
@@ -210,7 +225,9 @@ export default {
       days: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado'],
       shortDays: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
       shorterDays: ['D', 'M', 'T', 'Q', 'Q', 'S', 'S'],
-      months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+      months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro',
+        'Outubro', 'Novembro', 'Dezembro'
+      ],
       shortMonths: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
       shorterMonths: ['J', 'F', 'M', 'A', 'M', 'Ju', 'Ju', 'A', 'Se', 'O', 'N', 'D'],
       firstDayOfAWeek: 0
@@ -304,13 +321,14 @@ export default {
     .map-padding {
         margin: 80px;
     }
+
     .md-icon:after {
         width: 37px;
         height: 4px;
         position: absolute;
         left: -1px;
         bottom: -5px;
-        transition: .3s cubic-bezier(.4,0,.2,1);
+        transition: .3s cubic-bezier(.4, 0, .2, 1);
         content: normal !important;
     }
 </style>
