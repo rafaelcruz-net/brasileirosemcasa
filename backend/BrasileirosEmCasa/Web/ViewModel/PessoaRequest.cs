@@ -9,12 +9,12 @@ namespace Web.ViewModel
     public class PessoaRequest
     {
         [Required]
-        public DateTime DataInicioQuarentena { get; set; }
+        public String DataInicioQuarentena { get; set; }
 
         [Required]
         public int QuantidadePessoasCasa { get; set; }
 
         [Required]
-        public int IdCidade { get; set; }
+        public int Cidade { get; set; }
     }
 }

@@ -38,8 +38,22 @@ namespace Web
             services.AddScoped(typeof(ISession<>), typeof(UnitOfWork<>));
             services.AddScoped<IEstadoRepository, EstadoRepository>();
             services.AddScoped<IPessoaRepository, PessoaRepository>();
+            services.AddScoped<ICovid19Repository, Covid19Repository>();
+
+            services.AddCors(c =>
+            {
+                c.AddDefaultPolicy(p =>
+                {
+                    p.AllowAnyOrigin();
+                    p.AllowAnyHeader();
+                    p.AllowAnyMethod();
+                });
+            });
+
 
             services.AddControllers();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +69,7 @@ namespace Web
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {

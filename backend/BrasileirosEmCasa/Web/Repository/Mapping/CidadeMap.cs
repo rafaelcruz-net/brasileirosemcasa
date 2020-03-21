@@ -14,6 +14,7 @@ namespace Web.Repository.Mapping
             Table("Cidade");
             Id(x => x.Id).GeneratedBy.Identity();
             Map(x => x.Nome);
+            References(x => x.Estado).Unique().Column("uf").LazyLoad();
         }
     }
 }
