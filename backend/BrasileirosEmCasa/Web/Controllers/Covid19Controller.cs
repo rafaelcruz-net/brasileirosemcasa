@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Web.Repository;
 
 namespace Web.Controllers
@@ -13,45 +14,53 @@ namespace Web.Controllers
     [ApiController]
     public class Covid19Controller : ControllerBase
     {
-        public ICovid19Repository Covid19Repository { get; set; }
+        private ICovid19Repository Covid19Repository { get; set; }
 
-        public Covid19Controller(ICovid19Repository covid19Repository)
+        private IMemoryCache MemoryCache { get; set; }
+
+        public Covid19Controller(ICovid19Repository covid19Repository, IMemoryCache memoryCache)
         {
             this.Covid19Repository = covid19Repository;
+            this.MemoryCache = memoryCache;
         }
 
         [Route("map")]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var data = this.Covid19Repository.GetCovidInBrazilPerState();
+            return await this.MemoryCache.GetOrCreateAsync<IActionResult>($"{nameof(Covid19Controller)}_${nameof(Covid19Controller.Get)}", async (e) =>
+             {
+                 e.AbsoluteExpiration = DateTime.Now.AddMinutes(30);
 
-            if (data == null)
-                return await Task.FromResult(Ok());
+                 var data = await this.Covid19Repository.GetCovidInBrazilPerState();
 
-            var perEstado = (from x in data
-                             group x by x.Date into g
-                             select new
-                             {
-                                 Date = $"{g.Key.ToString().ToLower()}",
-                                 PerState = (from y in g
-                                             group y by y.State into s
-                                             select new
-                                             {
-                                                 UF = $"br-{s.Key.ToString().ToLower()}",
-                                                 Total = s.Select(t => t.TotalCase)
-                                             })
-                             }).OrderBy(x =>
-                             {
-                                 DateTime dateTimeInput;
-                                 DateTime.TryParseExact(x.Date, "yyyy-MM-dd", new CultureInfo("pt-br"), DateTimeStyles.None, out dateTimeInput);
-                                 return dateTimeInput;
-                             });
+                 if (data == null)
+                     return await Task.FromResult(Ok());
 
-            return await Task.FromResult(Ok(new
-            {
-                Map = perEstado.LastOrDefault()
-            }));
+                 var perEstado = (from x in data
+                                  group x by x.Date into g
+                                  select new
+                                  {
+                                      Date = $"{g.Key.ToString().ToLower()}",
+                                      PerState = (from y in g.Where(w => w.State.ToLower() != "total")
+                                                  group y by y.State into s
+                                                  select new
+                                                  {
+                                                      UF = $"br-{s.Key.ToString().ToLower()}",
+                                                      Total = s.Select(t => t.TotalCase)
+                                                  })
+                                  }).OrderBy(x =>
+                                  {
+                                      DateTime dateTimeInput;
+                                      DateTime.TryParseExact(x.Date, "yyyy-MM-dd", new CultureInfo("pt-br"), DateTimeStyles.None, out dateTimeInput);
+                                      return dateTimeInput;
+                                  });
+
+                 return await Task.FromResult(Ok(new
+                 {
+                     Map = perEstado.LastOrDefault()
+                 }));
+             });
 
         }
 

@@ -18,8 +18,10 @@ const pessoaStore: vuex.Module<{}, {}> = {
     },
     getMap: async ({ commit, state }) => {
       return pessoaService.getMap();
+    },
+    getCounterByStateAndMonth: async ({ commit, state }) => {
+      return pessoaService.getCounterByStateAndMonth();
     }
-
   }
 };
 

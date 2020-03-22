@@ -40,6 +40,8 @@ namespace Web
             services.AddScoped<IPessoaRepository, PessoaRepository>();
             services.AddScoped<ICovid19Repository, Covid19Repository>();
 
+            services.AddMemoryCache();
+
             services.AddCors(c =>
             {
                 c.AddDefaultPolicy(p =>
@@ -52,6 +54,7 @@ namespace Web
 
 
             services.AddControllers();
+            services.AddApplicationInsightsTelemetry();
 
 
         }

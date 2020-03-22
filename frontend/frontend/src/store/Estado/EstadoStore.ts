@@ -11,6 +11,9 @@ const estadoStore: vuex.Module<{}, {}> = {
   actions: {
     getEstado: async ({ commit, state }) => {
       return estadoService.getEstado();
+    },
+    getCidade: async ({ commit, state }, uf) => {
+      return estadoService.getCidade(uf);
     }
   }
 };

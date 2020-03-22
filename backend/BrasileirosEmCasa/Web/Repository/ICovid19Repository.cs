@@ -8,6 +8,6 @@ namespace Web.Repository
 {
     public interface ICovid19Repository
     {
-        IEnumerable<Covid19PerState> GetCovidInBrazilPerState();
+        Task<IEnumerable<Covid19PerState>> GetCovidInBrazilPerState();
     }
 }

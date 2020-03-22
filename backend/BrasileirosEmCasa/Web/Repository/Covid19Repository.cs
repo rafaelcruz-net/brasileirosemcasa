@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,10 +13,21 @@ namespace Web.Repository
 {
     public class Covid19Repository : ICovid19Repository
     {
-        public IEnumerable<Covid19PerState> GetCovidInBrazilPerState()
+        private IMemoryCache MemoryCache { get; set; }
+
+        public Covid19Repository(IMemoryCache memoryCache)
         {
-            var data = this.MakeRequest("https://raw.githubusercontent.com/wcota/covid19br/master/cases-brazil-states.csv");
-            return data;
+            this.MemoryCache = memoryCache;
+        }
+
+        public async Task<IEnumerable<Covid19PerState>> GetCovidInBrazilPerState()
+        {
+           return await this.MemoryCache.GetOrCreateAsync<IEnumerable<Covid19PerState>>($"{nameof(Covid19Repository)}_${nameof(Covid19Repository.GetCovidInBrazilPerState)}", (e) =>
+           {
+               e.AbsoluteExpiration = DateTime.Now.AddMinutes(30);
+               var data = this.MakeRequest("https://raw.githubusercontent.com/wcota/covid19br/master/cases-brazil-states.csv");
+               return Task.FromResult(data);
+           });
         }
 
         public IEnumerable<Covid19PerState> MakeRequest(string url)

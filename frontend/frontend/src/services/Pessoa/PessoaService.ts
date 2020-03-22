@@ -16,6 +16,9 @@ export class PessoaService extends HttpService {
   public async getMap () {
     return this.get(`/Pessoa/Map`);
   }
+  public async getCounterByStateAndMonth () {
+    return this.get(`/Pessoa/CounterByStateAndMonth`);
+  }
 }
 
 export default new PessoaService();
