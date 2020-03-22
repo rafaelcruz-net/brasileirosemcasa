@@ -19,7 +19,9 @@
     "highcharts-vue": "^1.3.5",
     "highcharts": "^8.0.4",
     "vue-loading-overlay": "^3.3.2",
-    "vue-sweetalert2": "^3.0.1"
+    "vue-sweetalert2": "^3.0.1",
+    "vue-fab": "^2.3.1",
+    "vue-js-modal": "^1.3.33"
   },
   "devDependencies": {
     "@vue/cli-plugin-router": "^4.1.0",

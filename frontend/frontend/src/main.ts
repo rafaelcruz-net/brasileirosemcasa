@@ -13,11 +13,13 @@ import mapInit from 'highcharts/modules/map';
 import addBrazilMap from './map/brazil';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import VModal from 'vue-js-modal';
 
 mapInit(Highcharts);
 addBrazilMap(Highcharts);
 Vue.use(HighchartsVue);
 
+Vue.use(VModal);
 Vue.use(VueMaterial);
 Vue.use(VueAxiosPlugin, { config: process.env.VUE_APP_ROOT_API });
 Vue.use(Vuelidate);

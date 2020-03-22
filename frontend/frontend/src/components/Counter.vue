@@ -25,8 +25,8 @@
                 style="text-align:center">
                 <md-card style="background-color:#EC407A">
                     <md-card-header>
-                        <div class="md-title md-counter-title">{{novosCasos}}</div>
-                        <div class="md-subhead md-counter-subtitle">Novos Casos</div>
+                        <div class="md-title md-counter-title">{{novosCasos.total}}</div>
+                        <div class="md-subhead md-counter-subtitle">Novos Casos no dia {{novosCasos.data}}</div>
                     </md-card-header>
                 </md-card>
             </div>
@@ -51,6 +51,9 @@ export default {
       this.casoConfirmadosCounter = r.data.totalCase;
       this.novosCasos = r.data.newCases;
     });
+  },
+  methods: {
+
   }
 };
 </script>

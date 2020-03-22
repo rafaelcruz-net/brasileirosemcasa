@@ -77,13 +77,19 @@ namespace Web.Controllers
         {
             var count = this.PessoaRepository.Query.Select(x => x.QuantidadePessoasCasa)?.Sum();
             var covid = (await this.Covid19Repository.GetCovidInBrazilPerState()).LastOrDefault();
-            
+
+            DateTime dateTimeInput;
+            DateTime.TryParseExact(covid.Date, "yyyy-MM-dd", new CultureInfo("pt-br"), DateTimeStyles.None, out dateTimeInput);
 
             return await Task.FromResult(Ok(new
             {
                 Count = count,
                 TotalCase = covid.TotalCase,
-                NewCases = covid.NewCases
+                NewCases = new
+                {
+                    Total = covid.NewCases,
+                    Data = (dateTimeInput == null ? DateTime.Now.ToString("dd/MM/yyyy") : dateTimeInput.ToString("dd/MM/yyyy"))
+                }
 
             }));
         }

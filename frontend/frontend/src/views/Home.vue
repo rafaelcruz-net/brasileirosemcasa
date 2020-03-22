@@ -18,7 +18,7 @@
             <Map />
           </md-content>
           <md-content>
-             <PeopleStackedBar />
+            <PeopleStackedBar />
           </md-content>
         </md-app-content>
       </md-app>
@@ -42,6 +42,11 @@
         </div>
       </div>
     </footer>
+    <fab :position="position" :bg-color="bgColor" :actions="fabActions" icon-size="large" main-icon="blur_on"  main-tooltip="Atendimento virtual" @showChatbot="showChatbot"></fab>
+    <modal name="chatbot" classes="chat" transition="scale" :adaptive="true" width="75%"  height="75%">
+       <div slot="top-right" class="ct-top-right" @click="$modal.hide('chatbot')"> FECHAR ATENDIMENTO </div>
+      <iframe src="https://chatbot-corona.web.app/" style="border: none; margin: 0; padding: 0; overflow: hidden; height:100%;  width:100%;  z-index: 999999;" ></iframe>
+    </modal>
   </div>
 </template>
 <script>
@@ -49,6 +54,7 @@ import Hero from '@/components/Hero';
 import Counter from '@/components/Counter';
 import Map from '@/components/Map';
 import PeopleStackedBar from '@/components/PeopleStackedBar';
+import fab from 'vue-fab';
 
 export default {
   name: 'Home',
@@ -56,15 +62,29 @@ export default {
     Hero,
     Counter,
     Map,
-    PeopleStackedBar
+    PeopleStackedBar,
+    fab
   },
 
   data: () => ({
-    menuVisible: false
+    menuVisible: false,
+    bgColor: '#00C853',
+    position: 'bottom-right',
+    fabActions: [{
+      name: 'showChatbot',
+      icon: 'tag_faces',
+      tooltip: 'Iniciar atendimento virtual com a Bia',
+      color: '#AA00FF'
+    }]
 
   }),
   mounted () {
 
+  },
+  methods: {
+    showChatbot () {
+      this.$modal.show('chatbot');
+    }
   }
 };
 </script>
@@ -88,5 +108,29 @@ export default {
   .footer {
     min-height: inherit;
     padding: 20px;
+  }
+
+  .chat {
+    background-color: transparent;
+    box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.4);
+  }
+   .ct-top-right {
+    cursor: pointer;
+    padding-top: 20px;
+    padding-right: 30px;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 0px 20px black;
+  }
+
+  .scale-enter-active,
+  .scale-leave-active {
+    transition: all 0.5s;
+  }
+
+  .scale-enter,
+  .scale-leave-active {
+    opacity: 0;
+    transform: scale(0.3) translateY(24px);
   }
 </style>
