@@ -17,7 +17,7 @@
     "vue-router": "^3.1.3",
     "vue-material": "^1.0.0-beta-11",
     "highcharts-vue": "^1.3.5",
-    "highcharts": "^8.0.4",
+    "highcharts": "^9.0.0",
     "vue-loading-overlay": "^3.3.2",
     "vue-sweetalert2": "^3.0.1",
     "vue-fab": "^2.3.1",
